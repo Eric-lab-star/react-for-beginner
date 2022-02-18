@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
-
+import styles from "./App.module.css";
+import { useState } from "react";
 function App() {
+  const [counter, setCounter] = useState(0);
+  const [keyword, setKeyword] = useState(0);
+  const onChange = (event) => {
+    setKeyword(event.target.value);
+    console.log(keyword);
+  };
+  const onClick = () => setCounter((previous) => previous + 1);
+  console.log("render");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.header}>
+      <input type="text" placeholder="search" onChange={onChange} />
+      <h1>{counter}</h1>
+      <button onClick={onClick}>Counter</button>
     </div>
   );
 }
