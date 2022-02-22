@@ -1,20 +1,38 @@
-import styles from "./App.module.css";
 import { useState } from "react";
 function App() {
-  const [counter, setCounter] = useState(0);
-  const [keyword, setKeyword] = useState(0);
+  const [task, setTask] = useState("");
+  const [taskList, setTaskList] = useState([]);
   const onChange = (event) => {
-    setKeyword(event.target.value);
-    console.log(keyword);
+    setTask(event.target.value);
   };
-  const onClick = () => setCounter((previous) => previous + 1);
-  console.log("render");
 
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (task === "") {
+      return;
+    }
+    setTask("");
+    setTaskList((currentTaskList) => [task, ...currentTaskList]);
+  };
+  console.log(taskList);
   return (
-    <div className={styles.header}>
-      <input type="text" placeholder="search" onChange={onChange} />
-      <h1>{counter}</h1>
-      <button onClick={onClick}>Counter</button>
+    <div>
+      <h2>My To do List ({taskList.length})</h2>
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={onChange}
+          value={task}
+          type="text"
+          placeholder="Write your tasks here"
+        />
+        <button>Add Task</button>
+        <br></br>
+        <ul>
+          {taskList.map((task, index) => (
+            <li key={index}>{task}</li>
+          ))}
+        </ul>
+      </form>
     </div>
   );
 }
